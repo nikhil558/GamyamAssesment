@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const ProductModal = ({ product, onSave }) => {
+const ProductModal = ({ product, onSave, isEditMode, onClose }) => {
   const [formData, setFormData] = useState({
     name: "",
     category: "",
@@ -23,17 +23,8 @@ const ProductModal = ({ product, onSave }) => {
         description: product.description || "",
         tags: product.tags ? product.tags.join(", ") : "",
       });
-    } else {
-      setFormData({
-        name: "",
-        category: "",
-        price: "",
-        stock: "",
-        description: "",
-        tags: "",
-      });
     }
-  }, [product]);
+  }, [product, isEditMode]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -44,6 +35,7 @@ const ProductModal = ({ product, onSave }) => {
   const handleClose = () => {
     document.getElementById("ProductModal").close();
     setErrors({});
+    onClose();
     setFormData({
       name: "",
       category: "",
@@ -113,7 +105,6 @@ const ProductModal = ({ product, onSave }) => {
             <input
               type="text"
               name="name"
-              required
               placeholder="Product Name"
               className={`input input-bordered w-full ${
                 errors.name ? "input-error" : ""
@@ -130,7 +121,6 @@ const ProductModal = ({ product, onSave }) => {
             <input
               type="text"
               name="category"
-              required
               placeholder="Category"
               className={`input input-bordered w-full ${
                 errors.category ? "input-error" : ""
@@ -147,7 +137,6 @@ const ProductModal = ({ product, onSave }) => {
             <input
               type="number"
               name="price"
-              required
               placeholder="Price"
               className={`input input-bordered w-full ${
                 errors.price ? "input-error" : ""

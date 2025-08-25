@@ -12,6 +12,7 @@ const Products = () => {
   const [currentPage, setCurrentPage] = React.useState(1);
   const [pageSize, setPageSize] = React.useState(5);
   const [selectedProduct, setSelectedProduct] = React.useState(null);
+  const [isEditMode, setIsEditMode] = React.useState(false);
 
   const filteredProducts = products.filter((p) =>
     p.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -32,7 +33,13 @@ const Products = () => {
 
   const editProduct = (product) => {
     setSelectedProduct(product);
+    setIsEditMode(true);
     document.getElementById("ProductModal").showModal();
+  };
+
+  const closeProductModal = () => {
+    setIsEditMode(false);
+    setSelectedProduct(null);
   };
 
   const saveProduct = (product) => {
@@ -106,7 +113,12 @@ const Products = () => {
           setCurrentPage(1); // reset to page 1 when size changes
         }}
       />
-      <ProductModal product={selectedProduct} onSave={saveProduct} />
+      <ProductModal
+        product={selectedProduct}
+        onSave={saveProduct}
+        isEditMode={isEditMode}
+        onClose={closeProductModal}
+      />
     </div>
   );
 };
