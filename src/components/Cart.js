@@ -10,7 +10,7 @@ const Cart = () => {
   return (
     <dialog id="cart_items" className="modal modal-bottom sm:modal-middle">
       <div className="modal-box !w-[90%] !max-w-[1200px] !top-1">
-        <div className="flex mb-4">
+        <div className="flex mb-8">
           <h3 className="font-bold text-lg">Cart</h3>
           <button
             onClick={() => dispatch(clearCart())}
